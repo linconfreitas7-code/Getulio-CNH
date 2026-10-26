@@ -1,0 +1,579 @@
+<title>Getúlio CNH</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Getúlio Vargas: orientação para tirar, renovar ou regularizar sua CNH pelo caminho legal. Atendimento em todo o Brasil pelo WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: sinalização viária brasileira. Asfalto escuro como palco, verde-documento e amarelo-faixa como acentos; seções separadas por faixa tracejada. */
+:root {
+  --bg: #F3F5EF;
+  --surface: #FFFFFF;
+  --surface-2: #E8EDE3;
+  --fg: #111F17;
+  --muted: #4B5C52;
+  --line: #D3DBD0;
+  --green: #0A6A39;
+  --green-ink: #FFFFFF;
+  --yellow: #F5C518;
+  --yellow-ink: #17150A;
+  --asphalt: #1A2420;
+  --asphalt-fg: #EEF3EF;
+  --red: #C8102E;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Source Sans 3", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --radius: 18px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C1410; --surface: #141F19; --surface-2: #1B2821; --fg: #E7EEE9; --muted: #A1B2A7; --line: #26362D;
+    --green: #3DBB7B; --green-ink: #04140B; --yellow: #F5C518; --yellow-ink: #17150A; --asphalt: #080D0A; --asphalt-fg: #EEF3EF; --red: #FF4D5E;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C1410; --surface: #141F19; --surface-2: #1B2821; --fg: #E7EEE9; --muted: #A1B2A7; --line: #26362D;
+  --green: #3DBB7B; --green-ink: #04140B; --yellow: #F5C518; --yellow-ink: #17150A; --asphalt: #080D0A; --asphalt-fg: #EEF3EF; --red: #FF4D5E;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); line-height: .98; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(3rem, 9vw, 6.4rem); font-weight: 900; text-transform: uppercase; letter-spacing: -.005em; }
+h2 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 800; text-transform: uppercase; }
+h3 { font-size: 1.5rem; font-weight: 700; line-height: 1.1; }
+p { margin: 0; max-width: 62ch; }
+.eyebrow { font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .14em; font-size: .95rem; color: var(--green); }
+.muted { color: var(--muted); }
+:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; border-radius: 6px; }
+
+/* Topo */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--asphalt); }
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 25; background: var(--asphalt); color: var(--asphalt-fg); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+.brand .badge { width: 40px; height: 40px; border-radius: 10px; background: var(--yellow); color: var(--yellow-ink); display: grid; place-items: center; font-family: var(--display); font-weight: 900; font-size: 1.2rem; flex-shrink: 0; }
+.brand .name { font-family: var(--display); font-weight: 800; font-size: 1.45rem; text-transform: uppercase; line-height: 1; white-space: nowrap; }
+.brand .name small { display: block; font-size: .72rem; letter-spacing: .2em; color: var(--yellow); font-weight: 700; margin-top: 3px; }
+nav.links { display: flex; gap: 4px; align-items: center; }
+nav.links a { text-decoration: none; font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 8px 12px; border-radius: 8px; font-size: 1.02rem; }
+nav.links a:hover, nav.links a[aria-current="page"] { background: rgba(255,255,255,.1); }
+nav.links a[aria-current="page"] { color: var(--yellow); }
+
+/* Botões */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-family: var(--display); font-weight: 800; font-size: 1.3rem; text-transform: uppercase; letter-spacing: .04em; text-decoration: none; padding: 15px 26px; border-radius: 12px; border: 2px solid transparent; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease; line-height: 1; }
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--yellow); color: var(--yellow-ink); box-shadow: 0 6px 0 #B58F06; }
+.btn-primary:hover { box-shadow: 0 8px 0 #B58F06; }
+.btn-primary:active { transform: translateY(3px); box-shadow: 0 2px 0 #B58F06; }
+.btn-ghost { border-color: currentColor; background: transparent; color: inherit; }
+.btn-small { font-size: 1.02rem; padding: 10px 16px; box-shadow: none; }
+.btn-small:hover, .btn-small:active { box-shadow: none; }
+.btn svg { width: 1.1em; height: 1.1em; flex-shrink: 0; }
+
+/* Hero */
+.hero { background: var(--asphalt); color: var(--asphalt-fg); position: relative; overflow: hidden; }
+.hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 10px; background: repeating-linear-gradient(90deg, var(--yellow) 0 56px, transparent 56px 100px); animation: drive 2.4s linear infinite; }
+@keyframes drive { to { background-position: -100px 0; } }
+.hero .wrap { display: grid; grid-template-columns: 1.2fr .8fr; gap: 48px; align-items: center; padding-block: 56px 76px; }
+.hero .copy { display: grid; gap: 22px; min-width: 0; }
+.hero .eyebrow { color: var(--yellow); }
+.hero h1 em { font-style: italic; color: var(--yellow); }
+.hero .lead { font-size: 1.22rem; color: #C5D2CA; }
+.hero .ctas { display: flex; gap: 14px; flex-wrap: wrap; padding-top: 4px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: 5px 12px; font-size: .92rem; color: #D8E2DC; }
+.chip b { color: var(--yellow); }
+
+/* Cartão CNH */
+.cnh-stage { position: relative; display: grid; place-items: center; min-width: 0; }
+.cnh { width: 100%; max-width: 400px; background: linear-gradient(155deg, #DDEBCF 0%, #F6F1CF 60%, #E7EFD8 100%); color: #13261B; border-radius: 18px; padding: 20px 22px 22px; box-shadow: 0 30px 60px -24px rgba(0,0,0,.6); transform: rotate(-3deg); border: 1px solid #C2D4B4; position: relative; animation: float 6s ease-in-out infinite; }
+@keyframes float { 50% { transform: rotate(-2deg) translateY(-8px); } }
+.cnh .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; border-bottom: 1px dashed #93AB83; padding-bottom: 10px; margin-bottom: 14px; }
+.cnh .head b { font-family: var(--display); font-size: 1.05rem; letter-spacing: .06em; text-transform: uppercase; display: block; line-height: 1.15; }
+.cnh .head small { font-size: .75rem; color: #3E5546; }
+.cnh .flag { width: 46px; height: 32px; border-radius: 4px; background: #0A6A39; position: relative; flex-shrink: 0; }
+.cnh .flag::after { content: ""; position: absolute; inset: 5px 8px; background: #F5C518; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.cnh .flag::before { content: ""; position: absolute; width: 10px; height: 10px; border-radius: 50%; background: #1C3D8F; left: 18px; top: 11px; z-index: 1; }
+.cnh .body { display: grid; grid-template-columns: 86px 1fr; gap: 16px; }
+.cnh .photo { aspect-ratio: 3/4; border-radius: 8px; background: #C6D6BC; display: grid; place-items: end center; overflow: hidden; max-width: 100%; }
+.cnh .photo svg { width: 82%; }
+.cnh dl { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; font-size: .9rem; min-width: 0; }
+.cnh dt { font-size: .66rem; text-transform: uppercase; letter-spacing: .09em; color: #4C6455; }
+.cnh dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+.cnh .full { grid-column: 1 / -1; }
+.cnh .cat { display: inline-block; background: #0A6A39; color: #fff; border-radius: 4px; padding: 0 8px; font-family: var(--display); font-size: 1.05rem; }
+.stamp { position: absolute; right: -10px; bottom: -18px; background: var(--yellow); color: var(--yellow-ink); font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: 1.05rem; letter-spacing: .06em; padding: 10px 14px; border-radius: 10px; transform: rotate(6deg); box-shadow: 0 10px 20px -8px rgba(0,0,0,.5); }
+
+section { padding-block: 80px; }
+.section-head { display: grid; gap: 12px; margin-bottom: 40px; }
+
+/* Casos */
+.cases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.case { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; display: grid; gap: 14px; align-content: start; min-width: 0; transition: transform .2s ease, border-color .2s ease; }
+.case:hover { transform: translateY(-4px); border-color: var(--green); }
+.case .sign { width: 58px; height: 58px; }
+.case p { color: var(--muted); }
+.case a { font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--green); text-decoration: none; }
+
+/* Teste rápido */
+.quiz-wrap { background: var(--surface-2); }
+.quiz { display: grid; grid-template-columns: .85fr 1.15fr; gap: 40px; align-items: start; }
+.quiz .intro { display: grid; gap: 14px; min-width: 0; }
+.quiz-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; display: grid; gap: 20px; min-width: 0; }
+.quiz-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.progress { display: flex; gap: 6px; }
+.progress i { width: 28px; height: 6px; border-radius: 3px; background: var(--line); }
+.progress i.on { background: var(--green); }
+.q { display: grid; grid-template-columns: 120px 1fr; gap: 22px; align-items: center; }
+.q svg { width: 120px; height: 120px; }
+.q h3 { font-size: 1.7rem; }
+.options { display: grid; gap: 10px; }
+.opt { font: inherit; text-align: left; padding: 14px 16px; border-radius: 12px; border: 2px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 12px; }
+.opt:hover:not(:disabled) { border-color: var(--green); }
+.opt .k { width: 28px; height: 28px; border-radius: 8px; background: var(--surface-2); display: grid; place-items: center; font-family: var(--display); font-weight: 800; flex-shrink: 0; }
+.opt.right { border-color: var(--green); background: color-mix(in srgb, var(--green) 14%, var(--bg)); }
+.opt.wrong { border-color: var(--red); background: color-mix(in srgb, var(--red) 10%, var(--bg)); }
+.opt:disabled { cursor: default; }
+.quiz-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; min-height: 52px; }
+.feedback { font-weight: 600; }
+.result { display: grid; gap: 14px; text-align: left; }
+.score { font-family: var(--display); font-weight: 900; font-size: 4.4rem; line-height: 1; color: var(--green); }
+
+/* Passos */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 4px solid var(--fg); }
+.step { padding: 26px 26px 8px 0; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.step + .step { padding-left: 26px; border-left: 1px solid var(--line); }
+.step .n { font-family: var(--display); font-weight: 900; font-size: 3.4rem; color: var(--green); line-height: 1; }
+.step p { color: var(--muted); }
+
+/* Regras */
+.rules { background: var(--green); color: var(--green-ink); }
+.rules .eyebrow { color: var(--yellow); }
+.rules .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+.rules ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.rules li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 16px 0; border-bottom: 1px solid color-mix(in srgb, var(--green-ink) 22%, transparent); min-width: 0; font-size: 1.08rem; }
+.rules li:first-child { padding-top: 0; }
+.rules li b { font-family: var(--display); font-size: 1.5rem; color: var(--yellow); line-height: 1.1; }
+.rules .note { font-size: .92rem; opacity: .85; margin-top: 18px; }
+
+/* Contato */
+.contact .grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 44px; align-items: start; }
+.contact .info { display: grid; gap: 16px; min-width: 0; }
+.phone { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; font-family: var(--display); font-size: 2.2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+form { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; display: grid; gap: 16px; min-width: 0; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+label { display: grid; gap: 6px; font-weight: 600; font-size: .95rem; }
+input, select { font: inherit; padding: 13px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); width: 100%; min-width: 0; }
+input:focus-visible, select:focus-visible { outline: 3px solid var(--green); outline-offset: 1px; }
+.form-note { font-size: .88rem; color: var(--muted); }
+
+/* FAQ */
+.faq { display: grid; gap: 12px; max-width: 820px; }
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; }
+summary { cursor: pointer; font-weight: 700; font-size: 1.1rem; }
+details p { margin-top: 10px; color: var(--muted); }
+
+/* Memes */
+.memes-hero { background: var(--asphalt); color: var(--asphalt-fg); }
+.memes-hero .wrap { padding-block: 56px 48px; display: grid; gap: 14px; }
+.memes-hero .eyebrow { color: var(--yellow); }
+.memes-hero p { color: #C5D2CA; font-size: 1.15rem; }
+.feed { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 22px; }
+.post { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: grid; grid-template-rows: auto 1fr; min-width: 0; }
+.meme { aspect-ratio: 1 / 1; max-width: 100%; position: relative; display: grid; grid-template-rows: auto 1fr auto; padding: 22px; gap: 10px; overflow: hidden; }
+.meme .top, .meme .bottom { font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: 1; font-size: clamp(1.5rem, 5.6vw, 2.05rem); text-wrap: balance; }
+.meme .art { display: grid; place-items: center; min-height: 0; }
+.meme .art svg { width: 58%; height: auto; max-height: 100%; }
+.meme .tag { position: absolute; right: 14px; top: 14px; font-family: var(--display); font-weight: 800; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; padding: 4px 8px; border-radius: 6px; background: rgba(0,0,0,.18); }
+.meme .sig { font-family: var(--display); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: .8rem; opacity: .8; }
+.m-asphalt { background: #1A2420; color: #F5F7F4; }
+.m-asphalt .bottom { color: #F5C518; }
+.m-yellow { background: #F5C518; color: #17150A; }
+.m-green { background: #0A6A39; color: #FFFFFF; }
+.m-green .bottom { color: #F5C518; }
+.m-paper { background: #F6F1CF; color: #13261B; }
+.post-body { padding: 18px 20px 20px; display: grid; gap: 12px; align-content: start; }
+.post-meta { display: flex; justify-content: space-between; gap: 10px; font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.post-body p { font-size: .98rem; white-space: pre-line; }
+.post-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.post-actions .btn { font-size: .95rem; padding: 9px 14px; }
+
+footer { background: var(--asphalt); color: #B8C6BE; }
+footer .wrap { padding-block: 34px; display: grid; gap: 8px; font-size: .92rem; }
+footer strong { color: var(--asphalt-fg); font-family: var(--display); font-size: 1.3rem; text-transform: uppercase; letter-spacing: .03em; }
+
+/* Barra fixa no celular */
+.mobile-bar { display: none; }
+
+.view[hidden] { display: none !important; }
+
+@media (max-width: 860px) {
+  .hero .wrap, .rules .grid, .contact .grid, .quiz { grid-template-columns: 1fr; gap: 36px; }
+  .hero .wrap { padding-block: 36px 64px; }
+  .cnh-stage { padding: 0 8px 18px; }
+  .cases, .steps { grid-template-columns: 1fr; }
+  .step, .step + .step { padding: 22px 0; border-left: 0; }
+  .step + .step { border-top: 1px solid var(--line); }
+  section { padding-block: 56px; }
+  .row { grid-template-columns: 1fr; }
+  .q { grid-template-columns: 84px 1fr; gap: 16px; }
+  .q svg { width: 84px; height: 84px; }
+  .q h3 { font-size: 1.35rem; }
+  .header-cta { display: none; }
+  .mobile-bar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 24; gap: 10px; background: var(--asphalt); padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); box-shadow: 0 -8px 20px -10px rgba(0,0,0,.5); }
+  .mobile-bar .btn { flex: 1; font-size: 1.1rem; padding: 14px; }
+  body { padding-bottom: 80px; }
+}
+@media (max-width: 420px) {
+  .brand .name { font-size: 1.2rem; }
+  nav.links a { padding: 8px 8px; font-size: .95rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero::after, .cnh { animation: none; }
+  .btn, .case { transition: none; }
+}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio" data-nav="inicio"><span class="badge">GV</span><span class="name">Getúlio Vargas<small>CNH · Brasil todo</small></span></a>
+    <nav class="links" aria-label="Principal">
+      <a href="#inicio" data-nav="inicio">Início</a>
+      <a href="#memes" data-nav="memes">Memes</a>
+      <a class="btn btn-primary btn-small header-cta wa-link" href="https://wa.me/553121300101" target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===================== INÍCIO ===================== -->
+<main class="view" id="view-inicio">
+  <div class="hero">
+    <div class="wrap">
+      <div class="copy">
+        <span class="eyebrow">Atendimento em todo o Brasil</span>
+        <h1>Sua CNH <em>sem enrolação</em></h1>
+        <p class="lead">Reprovou na autoescola, não tem tempo ou travou na renovação? Eu te mostro o caminho mais curto e legal para conquistar sua habilitação e acompanho você até a prova no Detran.</p>
+        <div class="ctas">
+          <a class="btn btn-primary wa-link" href="https://wa.me/553121300101" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
+            Quero minha CNH
+          </a>
+          <a class="btn btn-ghost" href="#teste">Fazer o teste</a>
+        </div>
+        <div class="chips">
+          <span class="chip"><b>✓</b> Processo 100% legal</span>
+          <span class="chip"><b>✓</b> Provas no Detran</span>
+          <span class="chip"><b>✓</b> Categorias A e B</span>
+        </div>
+      </div>
+      <div class="cnh-stage" aria-hidden="true">
+        <div class="cnh">
+          <div class="head">
+            <div><b>Carteira Nacional de Habilitação</b><small>República Federativa do Brasil</small></div>
+            <span class="flag"></span>
+          </div>
+          <div class="body">
+            <div class="photo"><svg viewBox="0 0 60 60"><circle cx="30" cy="22" r="12" fill="#86A07A"/><path d="M6 60c2-14 12-22 24-22s22 8 24 22z" fill="#86A07A"/></svg></div>
+            <dl>
+              <div class="full"><dt>Nome</dt><dd>Você</dd></div>
+              <div><dt>Cat. hab.</dt><dd><span class="cat">A</span> <span class="cat">B</span></dd></div>
+              <div><dt>1ª habilitação</dt><dd>2026</dd></div>
+              <div class="full"><dt>Observações</dt><dd>Aprovado no Detran</dd></div>
+            </dl>
+          </div>
+          <span class="stamp">Aprovado</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="para-quem">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Para quem é</span>
+        <h2>Cada caso tem um caminho</h2>
+      </div>
+      <div class="cases">
+        <article class="case">
+          <svg class="sign" viewBox="0 0 60 60" aria-hidden="true"><polygon points="30,3 57,30 30,57 3,30" fill="#F5C518" stroke="#17150A" stroke-width="2.5"/><text x="30" y="40" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="900" font-size="28" fill="#17150A">!</text></svg>
+          <h3>Reprovou e desanimou</h3>
+          <p>Já tentou na autoescola e não passou. A gente descobre onde travou e monta um plano para a próxima prova, teórica ou prática.</p>
+          <a class="case-link" data-case="Reprovei na prova e quero passar" href="#contato">Esse sou eu →</a>
+        </article>
+        <article class="case">
+          <svg class="sign" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="27" fill="#FFFFFF" stroke="#C8102E" stroke-width="6"/><path d="M30 16v15l9 6" stroke="#17150A" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+          <h3>Não tem tempo</h3>
+          <p>Trabalha o dia todo e não consegue seguir horário de autoescola. Pelas regras atuais, dá para se preparar de forma mais flexível.</p>
+          <a class="case-link" data-case="Não tenho tempo para autoescola" href="#contato">Esse sou eu →</a>
+        </article>
+        <article class="case">
+          <svg class="sign" viewBox="0 0 60 60" aria-hidden="true"><rect x="3" y="3" width="54" height="54" rx="8" fill="#0A6A39"/><path d="M42 22a14 14 0 1 0 3 12" stroke="#FFFFFF" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M44 12v11H33" stroke="#FFFFFF" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Problema na renovação</h3>
+          <p>CNH vencida, exame pendente ou dúvida sobre o que o Detran do seu estado pede. Eu te oriento em cada etapa.</p>
+          <a class="case-link" data-case="Preciso renovar a CNH" href="#contato">Esse sou eu →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="quiz-wrap" id="teste">
+    <div class="wrap quiz">
+      <div class="intro">
+        <span class="eyebrow">Teste rápido</span>
+        <h2>Você passaria na prova teórica?</h2>
+        <p class="muted">Três placas que caem na prova do Detran. Responda e veja seu resultado. Leva menos de um minuto.</p>
+      </div>
+      <div class="quiz-card" id="quiz" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="como-funciona">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Como funciona</span>
+        <h2>Três passos até a sua carteira</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">1</span><h3>Conversa no WhatsApp</h3><p>Você conta sua situação: primeira habilitação, reprovação, mudança de categoria ou renovação.</p></div>
+        <div class="step"><span class="n">2</span><h3>Plano para o seu caso</h3><p>Montamos o passo a passo pelas regras do Detran do seu estado, com os custos explicados antes de começar.</p></div>
+        <div class="step"><span class="n">3</span><h3>Acompanhamento até a prova</h3><p>Seguimos junto em cada etapa até você fazer as provas e conquistar a sua CNH.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rules" id="novas-regras">
+    <div class="wrap grid">
+      <div class="section-head" style="margin:0">
+        <span class="eyebrow">O que mudou</span>
+        <h2>As regras da CNH ficaram mais flexíveis</h2>
+        <p>Desde dezembro de 2025, a Resolução Contran nº 1.020/2025 mudou a forma de tirar a primeira habilitação. Muita gente ainda não sabe e acha que não tem saída.</p>
+      </div>
+      <div>
+        <ul>
+          <li><b>01</b><span>A autoescola deixou de ser o único caminho para se preparar.</span></li>
+          <li><b>30</b><span>Questões na prova teórica, tiradas de um banco nacional.</span></li>
+          <li><b>2ª</b><span>Reprovou? A segunda tentativa não tem taxa extra.</span></li>
+          <li><b>0</b><span>Atalhos ilegais. As provas continuam no Detran e ninguém pode vender CNH.</span></li>
+        </ul>
+        <p class="note">Detalhes e taxas variam por estado. Confirme sempre no Detran da sua cidade.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contato">
+    <div class="wrap grid">
+      <div class="info">
+        <span class="eyebrow">Fale comigo</span>
+        <h2>Vamos resolver a sua CNH</h2>
+        <p class="muted">Preencha ao lado e a mensagem já vai pronta para o WhatsApp. Se preferir, chame direto no número:</p>
+        <div class="phone"><span id="phone-text">(31) 2130-0101</span><button type="button" class="btn btn-ghost btn-small" id="copy-phone">Copiar</button></div>
+      </div>
+      <form id="lead-form" novalidate>
+        <div class="row">
+          <label for="f-nome">Seu nome<input id="f-nome" name="nome" autocomplete="name" placeholder="Ex.: Maria Souza"></label>
+          <label for="f-cidade">Cidade e estado<input id="f-cidade" name="cidade" autocomplete="address-level2" placeholder="Ex.: Belo Horizonte, MG"></label>
+        </div>
+        <label for="f-caso">Qual é a sua situação?
+          <select id="f-caso" name="caso">
+            <option>Quero tirar a primeira habilitação</option>
+            <option>Reprovei na prova e quero passar</option>
+            <option>Não tenho tempo para autoescola</option>
+            <option>Preciso renovar a CNH</option>
+            <option>Quero mudar ou adicionar categoria</option>
+          </select>
+        </label>
+        <a class="btn btn-primary" id="form-send" href="https://wa.me/553121300101" target="_blank" rel="noopener">Enviar pelo WhatsApp</a>
+        <p class="form-note">Abre o WhatsApp com a mensagem pronta. Você revisa e envia.</p>
+      </form>
+    </div>
+  </section>
+
+  <section id="duvidas" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Dúvidas</span>
+        <h2>Perguntas frequentes</h2>
+      </div>
+      <div class="faq">
+        <details><summary>Vocês vendem CNH?</summary><p>Não. Toda habilitação passa pelas provas oficiais do Detran. Nosso trabalho é orientar e acompanhar você até lá, com o caminho certo para o seu caso.</p></details>
+        <details><summary>Atende na minha cidade?</summary><p>Atendemos o Brasil inteiro pelo WhatsApp. As provas acontecem no Detran do seu estado, e o plano segue as regras dele.</p></details>
+        <details><summary>Ainda preciso de autoescola?</summary><p>Pelas regras atuais, a autoescola não é mais obrigatória para se preparar. Existem outros caminhos, e a gente explica qual faz mais sentido para você.</p></details>
+        <details><summary>Quanto custa?</summary><p>Depende do estado e da sua situação. Na primeira conversa você recebe o valor antes de começar qualquer coisa.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== MEMES ===================== -->
+<main class="view" id="view-memes" hidden>
+  <div class="memes-hero">
+    <div class="wrap">
+      <span class="eyebrow">Memes do trânsito</span>
+      <h2>Quem nunca passou por isso na autoescola?</h2>
+      <p>Os posts do Getúlio, primeiro aqui e depois em todas as redes. Marque aquele amigo que ainda não tirou a carteira.</p>
+    </div>
+  </div>
+  <section style="padding-top:48px">
+    <div class="wrap">
+      <div class="feed" id="feed"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <strong>Getúlio Vargas · CNH</strong>
+    <span>Atendimento em todo o Brasil pelo WhatsApp (31) 2130-0101.</span>
+    <span>Não somos órgão de trânsito. Exames realizados pelo Detran de cada estado.</span>
+  </div>
+</footer>
+
+<div class="mobile-bar">
+  <a class="btn btn-primary wa-link" href="https://wa.me/553121300101" target="_blank" rel="noopener">Falar no WhatsApp</a>
+</div>
+
+<script>
+(function () {
+  var NUMBER = "553121300101";
+  var BASE = "https://wa.me/" + NUMBER + "?text=";
+  function wa(msg) { return BASE + encodeURIComponent(msg); }
+  var GENERIC = "Olá, Getúlio! Vim pelo site e quero ajuda com a minha CNH.";
+  document.querySelectorAll(".wa-link").forEach(function (a) { a.href = wa(GENERIC); });
+
+  /* ---------- Navegação entre Início e Memes ---------- */
+  var views = { inicio: document.getElementById("view-inicio"), memes: document.getElementById("view-memes") };
+  var sectionIds = ["para-quem", "teste", "como-funciona", "novas-regras", "contato", "duvidas", "inicio"];
+  function route() {
+    var h = (location.hash || "").replace("#", "");
+    var show = h === "memes" ? "memes" : "inicio";
+    views.inicio.hidden = show !== "inicio";
+    views.memes.hidden = show !== "memes";
+    document.querySelectorAll("nav.links a[data-nav]").forEach(function (a) {
+      if (a.getAttribute("data-nav") === show) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (show === "memes" || h === "inicio" || h === "") window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", route);
+  route();
+
+  /* ---------- Formulário ---------- */
+  var nome = document.getElementById("f-nome"), cidade = document.getElementById("f-cidade"), caso = document.getElementById("f-caso"), send = document.getElementById("form-send");
+  function updateForm() {
+    var msg = "Olá, Getúlio! Vim pelo site.";
+    if (nome.value.trim()) msg += " Meu nome é " + nome.value.trim() + ".";
+    if (cidade.value.trim()) msg += " Sou de " + cidade.value.trim() + ".";
+    msg += " Situação: " + caso.value + ".";
+    send.href = wa(msg);
+  }
+  [nome, cidade, caso].forEach(function (el) { el.addEventListener("input", updateForm); el.addEventListener("change", updateForm); });
+  updateForm();
+  document.getElementById("lead-form").addEventListener("submit", function (e) { e.preventDefault(); });
+  document.querySelectorAll(".case-link").forEach(function (a) {
+    a.addEventListener("click", function () { caso.value = a.getAttribute("data-case"); updateForm(); });
+  });
+
+  /* ---------- Copiar telefone ---------- */
+  var copyBtn = document.getElementById("copy-phone");
+  copyBtn.addEventListener("click", function () {
+    var el = document.getElementById("phone-text");
+    function done() { copyBtn.textContent = "Copiado"; setTimeout(function () { copyBtn.textContent = "Copiar"; }, 2000); }
+    function selectIt() { var r = document.createRange(); r.selectNodeContents(el); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(el.textContent).then(done).catch(selectIt); else selectIt();
+  });
+
+  /* ---------- Teste de placas ---------- */
+  var SIGNS = {
+    pare: '<svg viewBox="0 0 100 100" role="img" aria-label="Placa vermelha octogonal com a palavra PARE"><polygon points="30,4 70,4 96,30 96,70 70,96 30,96 4,70 4,30" fill="#C8102E" stroke="#fff" stroke-width="4"/><text x="50" y="61" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="900" font-size="30" fill="#fff">PARE</text></svg>',
+    preferencia: '<svg viewBox="0 0 100 100" role="img" aria-label="Placa triangular de ponta para baixo, branca com borda vermelha"><polygon points="6,10 94,10 50,92" fill="#fff" stroke="#C8102E" stroke-width="10" stroke-linejoin="round"/></svg>',
+    velocidade: '<svg viewBox="0 0 100 100" role="img" aria-label="Placa redonda branca com borda vermelha e o número 60"><circle cx="50" cy="50" r="44" fill="#fff" stroke="#C8102E" stroke-width="10"/><text x="50" y="62" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="900" font-size="36" fill="#111">60</text></svg>'
+  };
+  var QUESTIONS = [
+    { sign: "pare", q: "O que esta placa manda fazer?", opts: ["Diminuir a velocidade", "Parar o veículo antes de seguir", "Seguir com atenção"], a: 1 },
+    { sign: "preferencia", q: "O que significa esta placa?", opts: ["Dê a preferência", "Proibido seguir em frente", "Fim da pista dupla"], a: 0 },
+    { sign: "velocidade", q: "E esta aqui?", opts: ["Velocidade mínima de 60 km/h", "Distância de 60 metros", "Velocidade máxima de 60 km/h"], a: 2 }
+  ];
+  var quiz = document.getElementById("quiz"), idx = 0, score = 0;
+  function bar() { var s = '<div class="progress">'; for (var i = 0; i < QUESTIONS.length; i++) s += '<i class="' + (i <= idx ? "on" : "") + '"></i>'; return s + "</div>"; }
+  function renderQ() {
+    var Q = QUESTIONS[idx];
+    var html = '<div class="quiz-top"><span>Pergunta ' + (idx + 1) + " de " + QUESTIONS.length + "</span>" + bar() + "</div>";
+    html += '<div class="q">' + SIGNS[Q.sign] + "<h3>" + Q.q + "</h3></div>";
+    html += '<div class="options">';
+    Q.opts.forEach(function (o, i) { html += '<button type="button" class="opt" id="opt-' + idx + "-" + i + '" data-i="' + i + '"><span class="k">' + "ABC"[i] + "</span>" + o + "</button>"; });
+    html += '</div><div class="quiz-foot"><span class="feedback" id="fb"></span><span></span></div>';
+    quiz.innerHTML = html;
+    quiz.querySelectorAll(".opt").forEach(function (b) { b.addEventListener("click", answer); });
+  }
+  function answer(e) {
+    var Q = QUESTIONS[idx], pick = +e.currentTarget.getAttribute("data-i");
+    var btns = quiz.querySelectorAll(".opt");
+    btns.forEach(function (b, i) { b.disabled = true; if (i === Q.a) b.classList.add("right"); else if (i === pick) b.classList.add("wrong"); });
+    if (pick === Q.a) score++;
+    document.getElementById("fb").textContent = pick === Q.a ? "Acertou!" : "Quase. A certa está marcada em verde.";
+    var foot = quiz.querySelector(".quiz-foot span:last-child");
+    var next = document.createElement("button");
+    next.type = "button"; next.className = "btn btn-primary btn-small"; next.id = "quiz-next";
+    next.textContent = idx < QUESTIONS.length - 1 ? "Próxima" : "Ver resultado";
+    next.addEventListener("click", function () { idx++; if (idx < QUESTIONS.length) renderQ(); else renderResult(); });
+    foot.appendChild(next); next.focus();
+  }
+  function renderResult() {
+    var msgs = ["Calma, todo mundo começa de algum lugar. Com o plano certo você chega lá.", "Você já sabe uma parte. Falta pouco para estar pronto.", "Quase lá! Mais um pouco de treino e você passa.", "Mandou bem! Agora é organizar o processo e marcar a prova."];
+    quiz.innerHTML = '<div class="result"><div class="quiz-top"><span>Seu resultado</span>' + '<div class="progress"><i class="on"></i><i class="on"></i><i class="on"></i></div></div>' +
+      '<div class="score">' + score + "/" + QUESTIONS.length + "</div><h3>" + msgs[score] + "</h3>" +
+      '<p class="muted">A prova real tem 30 questões. Eu te ajudo a se preparar e a resolver o processo no Detran.</p>' +
+      '<div class="post-actions"><a class="btn btn-primary" target="_blank" rel="noopener" href="' + wa("Olá, Getúlio! Fiz o teste de placas no site e acertei " + score + " de " + QUESTIONS.length + ". Quero ajuda para tirar minha CNH.") + '">Quero passar de primeira</a>' +
+      '<button type="button" class="btn btn-ghost btn-small" id="quiz-again">Refazer</button></div></div>';
+    document.getElementById("quiz-again").addEventListener("click", function () { idx = 0; score = 0; renderQ(); });
+  }
+  renderQ();
+
+  /* ---------- Memes (base dos posts das redes) ---------- */
+  var ART = {
+    car: '<svg viewBox="0 0 120 70" aria-hidden="true"><path d="M14 46l8-20c2-5 6-8 12-8h40c6 0 10 3 13 8l11 20" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/><rect x="6" y="44" width="108" height="16" rx="7" fill="currentColor"/><circle cx="32" cy="60" r="9" fill="currentColor" stroke="var(--meme-bg)" stroke-width="4"/><circle cx="88" cy="60" r="9" fill="currentColor" stroke="var(--meme-bg)" stroke-width="4"/></svg>',
+    cone: '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M42 10h16l20 72H22z" fill="#F07A1A"/><path d="M36 34h28l4 14H32zM29 60h42l4 13H25z" fill="#fff"/><rect x="12" y="80" width="76" height="10" rx="3" fill="currentColor"/></svg>',
+    calendar: '<svg viewBox="0 0 100 100" aria-hidden="true"><rect x="10" y="18" width="80" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="6"/><path d="M10 38h80M32 8v20M68 8v20" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><text x="50" y="76" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="900" font-size="30" fill="currentColor">???</text></svg>',
+    card: '<svg viewBox="0 0 120 80" aria-hidden="true"><rect x="4" y="6" width="112" height="68" rx="10" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="32" cy="34" r="10" fill="currentColor"/><path d="M16 62c2-9 8-14 16-14s14 5 16 14" fill="currentColor"/><path d="M60 26h44M60 40h36M60 54h28" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>',
+    mirror: '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M20 30c0-8 6-14 14-14h40c8 0 12 6 10 14l-6 28c-2 8-8 12-16 12H30c-8 0-12-6-10-14z" fill="none" stroke="currentColor" stroke-width="6"/><path d="M40 70l-6 22M34 92h22" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><circle cx="56" cy="40" r="7" fill="currentColor"/></svg>'
+  };
+  var POSTS = [
+    { date: "2026-10-26", theme: "m-asphalt", art: "car", tag: "#autoescola",
+      top: "Instrutor: pode ir", bottom: "Eu, que nunca passei da segunda marcha:",
+      caption: "Quem já sentiu esse frio na barriga levanta a mão 🙋\nSe a autoescola te deixou travado, tem outro caminho. Fala comigo no WhatsApp e eu te mostro como conquistar sua CNH." },
+    { date: "2026-10-27", theme: "m-yellow", art: "cone", tag: "#baliza",
+      top: "Ninguém:", bottom: "Examinador na baliza: mais um pouquinho...",
+      caption: "A baliza não é monstro, é técnica 😅\nQuer dicas pra prova prática e ajuda pra organizar o processo no Detran? Chama no WhatsApp." },
+    { date: "2026-10-28", theme: "m-green", art: "card", tag: "#novasregras",
+      top: "POV: você descobriu que autoescola não é mais obrigatória", bottom: "E que dá pra tirar a CNH do seu jeito",
+      caption: "Desde dezembro de 2025, a Resolução Contran nº 1.020/2025 mudou as regras da primeira habilitação.\nAs provas continuam no Detran, mas a preparação ficou mais flexível. Quer saber como fica no seu estado? Me chama." },
+    { date: "2026-10-29", theme: "m-paper", art: "calendar", tag: "#renovação",
+      top: "Eu: amanhã eu renovo a CNH", bottom: "A CNH vencida desde 2023:",
+      caption: "Amanhã vira semana, semana vira ano 📅\nCNH vencida ou com pendência? Eu te ajudo a resolver. Atendimento em todo o Brasil." },
+    { date: "2026-10-30", theme: "m-asphalt", art: "mirror", tag: "#provaprática",
+      top: "Regra nº 1 da prova prática", bottom: "Olhar o retrovisor até pra respirar",
+      caption: "Retrovisor, seta, retrovisor de novo 👀\nSalva esse post pra lembrar no dia da prova e manda pra quem vai fazer o exame." }
+  ];
+  function fmtDate(iso) { var p = iso.split("-"); return p[2] + "/" + p[1] + "/" + p[0]; }
+  var BG = { "m-asphalt": "#1A2420", "m-yellow": "#F5C518", "m-green": "#0A6A39", "m-paper": "#F6F1CF" };
+  var feed = document.getElementById("feed");
+  feed.innerHTML = POSTS.slice().reverse().map(function (p, i) {
+    return '<article class="post">' +
+      '<div class="meme ' + p.theme + '" style="--meme-bg:' + BG[p.theme] + '">' +
+        '<span class="tag">' + p.tag + '</span>' +
+        '<div class="top">' + p.top + '</div>' +
+        '<div class="art">' + ART[p.art] + '</div>' +
+        '<div><div class="bottom">' + p.bottom + '</div><div class="sig">Getúlio Vargas · CNH</div></div>' +
+      '</div>' +
+      '<div class="post-body">' +
+        '<div class="post-meta"><span>' + fmtDate(p.date) + '</span><span>' + p.tag + '</span></div>' +
+        '<p>' + p.caption + '</p>' +
+        '<div class="post-actions"><a class="btn btn-primary" target="_blank" rel="noopener" href="' + wa("Olá, Getúlio! Vi o meme \"" + p.top + "\" no site e quero ajuda com a minha CNH.") + '">Quero minha CNH</a></div>' +
+      '</div></article>';
+  }).join("");
+})();
+</script>
