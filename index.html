@@ -188,7 +188,8 @@ details p { margin-top: 10px; color: var(--muted); }
 .meme .top, .meme .bottom { font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: 1; font-size: clamp(1.5rem, 5.6vw, 2.05rem); text-wrap: balance; }
 .meme .art { display: grid; place-items: center; min-height: 0; }
 .meme .art svg { width: 58%; height: auto; max-height: 100%; }
-.meme .tag { position: absolute; right: 14px; top: 14px; font-family: var(--display); font-weight: 800; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; padding: 4px 8px; border-radius: 6px; background: rgba(0,0,0,.18); }
+.meme .foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 10px; }
+.meme .tag { font-family: var(--display); font-weight: 800; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; padding: 4px 8px; border-radius: 6px; background: rgba(0,0,0,.18); white-space: nowrap; }
 .meme .sig { font-family: var(--display); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: .8rem; opacity: .8; }
 .m-asphalt { background: #1A2420; color: #F5F7F4; }
 .m-asphalt .bottom { color: #F5C518; }
@@ -564,10 +565,9 @@ footer strong { color: var(--asphalt-fg); font-family: var(--display); font-size
   feed.innerHTML = POSTS.slice().reverse().map(function (p, i) {
     return '<article class="post">' +
       '<div class="meme ' + p.theme + '" style="--meme-bg:' + BG[p.theme] + '">' +
-        '<span class="tag">' + p.tag + '</span>' +
         '<div class="top">' + p.top + '</div>' +
         '<div class="art">' + ART[p.art] + '</div>' +
-        '<div><div class="bottom">' + p.bottom + '</div><div class="sig">Getúlio Vargas · CNH</div></div>' +
+        '<div><div class="bottom">' + p.bottom + '</div><div class="foot"><span class="sig">Getúlio Vargas · CNH</span><span class="tag">' + p.tag + '</span></div></div>' +
       '</div>' +
       '<div class="post-body">' +
         '<div class="post-meta"><span>' + fmtDate(p.date) + '</span><span>' + p.tag + '</span></div>' +
