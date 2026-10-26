@@ -37,12 +37,13 @@ PAGES = [
     },
 ]
 
-FAQ = [
-    ("Vocês vendem CNH?", "Não. Toda habilitação passa pelas provas oficiais do Detran. O trabalho é orientar e acompanhar você até lá, com o caminho certo para o seu caso."),
-    ("Atende na minha cidade?", "Sim. O atendimento é em todo o Brasil pelo WhatsApp. As provas acontecem no Detran do seu estado, e o plano segue as regras dele."),
-    ("Ainda preciso de autoescola para tirar a CNH?", "Pelas regras atuais (Resolução Contran nº 1.020/2025), a autoescola não é mais obrigatória para se preparar. Existem outros caminhos, e a gente explica qual faz mais sentido para você."),
-    ("Quanto custa?", "Depende do estado e da sua situação. Na primeira conversa você recebe o valor antes de começar qualquer coisa."),
-]
+def faq_from(src):
+    """Lê as perguntas visíveis (<details class="qa">) para o schema FAQPage."""
+    out = []
+    for q, a in re.findall(r'<details class="qa"><summary>(.*?)</summary><div class="a">(.*?)</div></details>', src, flags=re.S):
+        clean = lambda t: html.unescape(re.sub(r"<[^>]+>", "", t)).strip()
+        out.append((clean(q), clean(a)))
+    return out
 
 FAVICON = (
     "data:image/svg+xml,"
@@ -52,7 +53,7 @@ FAVICON = (
 )
 
 
-def json_ld(page):
+def json_ld(page, faq):
     org = {
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
@@ -76,7 +77,7 @@ def json_ld(page):
             "@type": "FAQPage",
             "mainEntity": [
                 {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
-                for q, a in FAQ
+                for q, a in faq
             ],
         })
     return "\n".join(
@@ -92,40 +93,42 @@ def tracking_head(cfg):
     if cfg.get("facebook_domain_verification"):
         out.append(f'<meta name="facebook-domain-verification" content="{html.escape(cfg["facebook_domain_verification"])}">')
     ga = cfg.get("ga4_measurement_id")
-    if ga:
-        out.append(
-            f'<script async src="https://www.googletagmanager.com/gtag/js?id={ga}"></script>\n'
-            "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}"
-            f"gtag('js',new Date());gtag('config','{ga}');</script>"
-        )
     px = cfg.get("meta_pixel_id")
+    js = ["window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}"]
+    js.append("gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});")
+    pixel = ""
     if px:
-        out.append(
-            "<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?"
-            "n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';"
-            "n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}"
-            "(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');"
-            f"fbq('init','{px}');fbq('track','PageView');</script>\n"
-            f'<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id={px}&ev=PageView&noscript=1"></noscript>'
-        )
+        pixel = ("!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?"
+                 "n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';"
+                 "n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}"
+                 "(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');"
+                 f"fbq('init','{px}');fbq('track','PageView');")
+    js.append("window.gvGrant=function(){if(window.gvGranted)return;window.gvGranted=1;"
+              "gtag('consent','update',{analytics_storage:'granted',ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});"
+              + pixel + "};")
+    js.append("try{if(localStorage.getItem('gv-consent')==='all')gvGrant();}catch(e){}")
+    if ga:
+        js.append(f"gtag('js',new Date());gtag('config','{ga}');")
+        out.append(f'<script async src="https://www.googletagmanager.com/gtag/js?id={ga}"></script>')
+    out.append("<script>" + "".join(js) + "</script>")
     return "\n".join(out)
 
 
 # Mede cliques no WhatsApp e o resultado do teste de placas, se GA4 ou Pixel estiverem ativos.
 TRACKING_BODY = """<script>
 (function () {
-  function send(gaEvent, gaParams, fbEvent, fbParams) {
-    try { if (window.gtag) gtag("event", gaEvent, gaParams || {}); } catch (e) {}
-    try { if (window.fbq && fbEvent) fbq("track", fbEvent, fbParams || {}); } catch (e) {}
+  function send(source) {
+    try { if (window.gtag) gtag("event", "generate_lead", { method: "whatsapp", lead_source: source }); } catch (e) {}
+    try { if (window.fbq) fbq("track", "Contact", { content_name: source }); } catch (e) {}
   }
   document.addEventListener("click", function (e) {
-    var a = e.target.closest && e.target.closest('a[href*="wa.me/"]');
-    if (!a) return;
-    var where = a.id === "form-send" ? "formulario" : (a.closest(".post") ? "meme" : (a.closest(".quiz-card") ? "teste" : "botao"));
-    send("generate_lead", { method: "whatsapp", lead_source: where }, "Contact", { content_name: where });
+    var a = e.target.closest && e.target.closest('a[href*="wa.me/553121300101"]');
+    if (a) send(a.getAttribute("data-src") || "botao");
   });
+  document.addEventListener("gv:lead", function (e) { send(e.detail.source); });
   document.addEventListener("gv:quiz", function (e) {
-    send("quiz_complete", { score: e.detail.score }, "Lead", { content_name: "teste_placas", value: e.detail.score });
+    try { if (window.gtag) gtag("event", "quiz_complete", { score: e.detail.score }); } catch (x) {}
+    try { if (window.fbq) fbq("track", "Lead", { content_name: "teste_placas", value: e.detail.score }); } catch (x) {}
   });
 })();
 </script>"""
@@ -135,6 +138,7 @@ RESET = "<style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:1
 
 def build(src_path, out_dir):
     src = Path(src_path).read_text(encoding="utf-8")
+    faq = faq_from(src)
     out = Path(out_dir)
     cfg_path = out / "config.json"
     cfg = json.loads(cfg_path.read_text()) if cfg_path.exists() else {}
@@ -157,7 +161,7 @@ def build(src_path, out_dir):
 <meta name="description" content="{d}">
 <link rel="canonical" href="{url}">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#1A2420">
+<meta name="theme-color" content="#F6F8F3">
 <link rel="icon" href="{FAVICON}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
@@ -169,7 +173,7 @@ def build(src_path, out_dir):
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-{json_ld(page)}
+{json_ld(page, faq)}
 {tracking_head(cfg)}
 {RESET}
 {head_src}
