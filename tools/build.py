@@ -129,7 +129,7 @@ TRACKING_BODY = """<script>
   document.addEventListener("gv:lead", function (e) { send(e.detail.source); });
   document.addEventListener("gv:quiz", function (e) {
     try { if (window.gtag) gtag("event", "quiz_complete", { score: e.detail.score }); } catch (x) {}
-    try { if (window.fbq) fbq("track", "Lead", { content_name: "teste_placas", value: e.detail.score }); } catch (x) {}
+    try { if (window.fbq) fbq("trackCustom", "TestePlacas", { score: e.detail.score }); } catch (x) {}
   });
 })();
 </script>"""
