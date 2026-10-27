@@ -120,7 +120,7 @@ TRACKING_BODY = """<script>
 (function () {
   function send(source) {
     try { if (window.gtag) gtag("event", "generate_lead", { method: "whatsapp", lead_source: source }); } catch (e) {}
-    try { if (window.fbq) fbq("track", "Contact", { content_name: source }); } catch (e) {}
+    try { if (window.fbq) { fbq("track", "Contact", { content_name: source }); fbq("track", "Lead", { content_name: source }); } } catch (e) {}
   }
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest('a[href*="wa.me/553121300101"]');
