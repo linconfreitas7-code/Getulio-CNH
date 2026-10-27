@@ -3,5 +3,6 @@ Allow: /
 Disallow: /src/
 Disallow: /tools/
 Disallow: /ads/
+Disallow: /media/
 
 Sitemap: https://getulio-cnh.onrender.com/sitemap.xml
