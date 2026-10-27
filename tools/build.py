@@ -18,6 +18,7 @@ PHONE_E164 = "+553121300101"
 SAME_AS = [
     "https://www.facebook.com/profile.php?id=61578643142126",
     "https://www.youtube.com/@getuliocnh",
+    "https://www.instagram.com/getuliovargascnh/",
 ]
 
 PAGES = [
