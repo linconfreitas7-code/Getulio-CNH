@@ -12,7 +12,7 @@ import sys
 from datetime import date
 from pathlib import Path
 
-SITE = "https://getulio-cnh.onrender.com"
+SITE = "https://getuliocnh.com.br"
 PHONE_DISPLAY = "(31) 2130-0101"
 PHONE_E164 = "+553121300101"
 SAME_AS = [
@@ -157,6 +157,7 @@ def build(src_path, out_dir):
 <html lang="pt-BR" data-view="{page['view']}">
 <head>
 <meta charset="utf-8">
+<script>if(/[.]onrender[.]com$/.test(location.hostname))location.replace("https://getuliocnh.com.br"+location.pathname+location.search+location.hash);</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{t}</title>
 <meta name="description" content="{d}">

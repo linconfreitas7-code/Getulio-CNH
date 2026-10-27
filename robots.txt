@@ -5,4 +5,4 @@ Disallow: /tools/
 Disallow: /ads/
 Disallow: /media/
 
-Sitemap: https://getulio-cnh.onrender.com/sitemap.xml
+Sitemap: https://getuliocnh.com.br/sitemap.xml
