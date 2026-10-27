@@ -290,6 +290,8 @@ p { margin: 0; }
 .meme .art svg { width: 56%; height: auto; max-height: 100%; }
 .meme .foot { display: flex; justify-content: space-between; align-items: center; gap: 3cqi; margin-top: 3cqi; }
 .meme .tag { font-weight: 700; font-size: 3.2cqi; letter-spacing: .06em; text-transform: uppercase; padding: 1cqi 2.4cqi; border-radius: 6px; background: rgba(0,0,0,.18); white-space: nowrap; }
+.meme.m-video { aspect-ratio: 9 / 16; background: #0B0F0D; }
+.meme.m-video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .meme .sig { font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: 3.2cqi; opacity: .8; }
 .m-asphalt { background: #1A2420; color: #F5F7F4; }
 .m-asphalt .bottom { color: #F5C518; }
@@ -1103,6 +1105,9 @@ p { margin: 0; }
     { date: "2026-10-27", theme: "m-yellow", art: "cone", tag: "#baliza",
       top: "Ninguém:", bottom: "Examinador na baliza: mais um pouquinho...",
       caption: "A baliza não é monstro, é técnica 😅\nQuer dicas pra prova prática e ajuda pra organizar o processo no Detran? Chama no WhatsApp." },
+    { date: "2026-10-27", video: "/media/memes/meme-blitz-real.mp4", poster: "/media/memes/meme-blitz-real.jpg", tag: "#blitz",
+      top: "Eu passando na frente da blitz depois de tirar minha habilitação",
+      caption: "Passar na blitz depois de tirar a CNH tem outro sabor 😎🚔\nDocumento em dia e nenhum frio na barriga. Ainda não chegou nesse momento? Eu te oriento do começo até a prova no Detran, em qualquer estado do Brasil." },
     { date: "2026-10-28", theme: "m-green", art: "card", tag: "#novasregras",
       top: "POV: você descobriu que autoescola não é mais obrigatória", bottom: "E que dá pra tirar a CNH do seu jeito",
       caption: "Desde dezembro de 2025, a Resolução Contran nº 1.020/2025 mudou as regras da primeira habilitação.\nAs provas continuam no Detran, mas a preparação ficou mais flexível. Quer saber como fica no seu estado? Me chama." },
@@ -1115,7 +1120,8 @@ p { margin: 0; }
   ];
   var BG = { "m-asphalt": "#1A2420", "m-yellow": "#F5C518", "m-green": "#0A6A39", "m-paper": "#F6F1CF" };
   function fmtDate(iso) { var p = iso.split("-"); return p[2] + "/" + p[1] + "/" + p[0]; }
-  function memeHTML(p) {
+  function memeHTML(p, teaser) {
+    if (p.video) return '<div class="meme m-video"><video src="' + p.video + '" poster="' + p.poster + '" playsinline preload="none" ' + (teaser ? 'muted loop data-auto' : 'controls') + ' aria-label="Vídeo: ' + p.top + '"></video></div>';
     return '<div class="meme ' + p.theme + '" style="--meme-bg:' + BG[p.theme] + '"><div class="mi"><div class="top">' + p.top + '</div><div class="art">' + ART[p.art] + '</div><div><div class="bottom">' + p.bottom + '</div><div class="foot"><span class="sig">Getúlio Vargas · CNH</span><span class="tag">' + p.tag + "</span></div></div></div></div>";
   }
   var today = new Date(); today.setHours(23, 59, 59, 999);
@@ -1126,7 +1132,12 @@ p { margin: 0; }
     return '<article class="post">' + memeHTML(p) + '<div class="post-body"><div class="post-meta"><span>' + fmtDate(p.date) + "</span><span>" + p.tag + "</span></div><p>" + p.caption + '</p><div class="row-actions"><a class="btn btn-wa btn-small" data-src="meme" target="_blank" rel="noopener" href="' + wa("Olá, Getúlio! Vi o meme \"" + p.top + "\" no site e quero ajuda com a minha CNH.") + '"><svg class="ico"><use href="#i-wa"/></svg>Quero minha CNH</a></div></div></article>';
   }).join("");
   var teaser = ordered.concat(POSTS.filter(function (p) { return live.indexOf(p) < 0; })).slice(0, 3);
-  document.getElementById("memesTeaser").innerHTML = teaser.map(function (p) { return '<div class="phone"><div class="screen">' + memeHTML(p) + "</div></div>"; }).join("");
+  document.getElementById("memesTeaser").innerHTML = teaser.map(function (p) { return '<div class="phone"><div class="screen">' + memeHTML(p, true) + "</div></div>"; }).join("");
+  var autos = document.querySelectorAll("video[data-auto]");
+  if (autos.length && "IntersectionObserver" in window && !reduce) {
+    var vio = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { var pr = e.target.play(); if (pr) pr.catch(function () {}); } else e.target.pause(); }); }, { threshold: .4 });
+    autos.forEach(function (v) { vio.observe(v); });
+  }
 
   /* ---------- Compartilhar ---------- */
   var shareText = "Olha esse site pra tirar, renovar ou regularizar a CNH, com atendimento em todo o Brasil: " + SITE;
