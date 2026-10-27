@@ -3,7 +3,8 @@
 <meta name="description" content="Getúlio Vargas: orientação para tirar, renovar ou regularizar sua CNH pelo caminho legal. Atendimento em todo o Brasil pelo WhatsApp.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap"></noscript>
 <style>
 /* Paleta Getúlio CNH: verde-documento, amarelo-faixa e asfalto. Estrutura: topo fixo, hero com cartão CNH, estrada com números, seções alternadas. */
 :root {
@@ -27,7 +28,7 @@
   --inverse: #111F17;
   --inverse-ink: #FFFFFF;
   --shadow: 0 18px 40px -22px rgba(17, 31, 23, .35);
-  --display: "Poppins", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --display: "Poppins", "Poppins Fallback", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --body: "Source Sans 3", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --radius: 20px;
   --header-h: 72px;
@@ -50,9 +51,10 @@
   --shadow: 0 18px 40px -22px rgba(0, 0, 0, .7); --mark-fg: #F5C518; --mark-stop: 88%;
   color-scheme: dark;
 }
+@font-face { font-family: "Poppins Fallback"; src: local("Arial"); size-adjust: 112.1%; ascent-override: 93.6%; descent-override: 31.2%; line-gap-override: 8.9%; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 12px); }
-body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden; }
 a { color: inherit; }
 button { font: inherit; }
 .wrap { max-width: 1160px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
@@ -61,7 +63,10 @@ h1 { font-size: clamp(2.5rem, 6.2vw, 4.6rem); font-weight: 800; line-height: 1.0
 h2 { font-size: clamp(1.9rem, 4.2vw, 2.9rem); font-weight: 800; line-height: 1.1; }
 h3 { font-size: 1.28rem; font-weight: 700; line-height: 1.25; }
 p { margin: 0; }
-.eyebrow { font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .16em; font-size: .78rem; color: var(--green); }
+.eyebrow { font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .16em; font-size: .78rem; color: var(--green); display: inline-flex; align-items: center; gap: 10px; }
+.eyebrow::before { content: ""; width: 22px; height: 3px; border-radius: 2px; background: var(--yellow); flex-shrink: 0; }
+.section__head .eyebrow::after { content: ""; width: 22px; height: 3px; border-radius: 2px; background: var(--yellow); flex-shrink: 0; }
+::selection { background: var(--yellow); color: var(--yellow-ink); }
 .muted { color: var(--muted); }
 :focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; border-radius: 8px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -93,6 +98,9 @@ p { margin: 0; }
 
 /* Botões */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 1rem; text-decoration: none; padding: 15px 26px; border-radius: 999px; border: 2px solid transparent; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease; line-height: 1.1; text-align: center; }
+.btn { position: relative; overflow: hidden; }
+.btn::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%); transform: translateX(-120%); transition: transform .6s ease; pointer-events: none; }
+.btn:hover::after { transform: translateX(120%); }
 .btn:hover { transform: translateY(-2px); }
 .btn:active { transform: translateY(1px); }
 .btn-primary { background: linear-gradient(180deg, #FFD43B, var(--yellow)); color: var(--yellow-ink); box-shadow: 0 12px 26px -12px rgba(181, 143, 6, .9); }
@@ -151,11 +159,11 @@ p { margin: 0; }
 .road { position: relative; height: 110px; background: var(--asphalt); overflow: hidden; }
 .road::before, .road::after { content: ""; position: absolute; left: 0; right: 0; height: 8px; background: repeating-linear-gradient(90deg, var(--yellow) 0 40px, var(--asphalt) 40px 56px); }
 .road::before { top: 0; } .road::after { bottom: 0; }
-.road .lane { position: absolute; left: 0; right: 0; top: 50%; height: 5px; margin-top: -2px; background: repeating-linear-gradient(90deg, rgba(255,255,255,.75) 0 46px, transparent 46px 92px); animation: lane 1.6s linear infinite; }
-@keyframes lane { to { background-position: -92px 0; } }
-.road .car { position: absolute; top: 22px; width: 96px; left: -120px; animation: drive 9s linear infinite; }
+.road .lane { position: absolute; left: 0; width: calc(100% + 92px); top: 50%; height: 5px; margin-top: -2px; background: repeating-linear-gradient(90deg, rgba(255,255,255,.75) 0 46px, transparent 46px 92px); animation: lane 1.6s linear infinite; will-change: transform; }
+@keyframes lane { to { transform: translateX(-92px); } }
+.road .car { position: absolute; top: 22px; width: 96px; left: 0; transform: translateX(-140px); animation: drive 9s linear infinite; will-change: transform; }
 .road .car.two { top: 58px; width: 80px; animation-duration: 13s; animation-delay: -6s; animation-direction: reverse; }
-@keyframes drive { to { left: 110%; } }
+@keyframes drive { from { transform: translateX(-140px); } to { transform: translateX(calc(100vw + 40px)); } }
 .stats { position: relative; z-index: 2; margin-top: -42px; }
 .stats .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); display: grid; grid-template-columns: repeat(4, 1fr); }
 .stat { padding: 22px 16px; text-align: center; display: grid; gap: 2px; }
@@ -178,6 +186,8 @@ p { margin: 0; }
 /* Serviços */
 .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
 .service { position: relative; overflow: hidden; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; display: grid; gap: 14px; align-content: start; grid-template-rows: auto auto auto 1fr auto; min-width: 0; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.service::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: linear-gradient(90deg, var(--green), var(--yellow)); transform: scaleX(0); transform-origin: 0 50%; transition: transform .35s ease; }
+.service:hover::before { transform: scaleX(1); }
 .service:hover { transform: translateY(-6px); box-shadow: var(--shadow); border-color: color-mix(in srgb, var(--green) 40%, var(--line)); }
 .service.featured { border: 2px solid var(--yellow); box-shadow: 0 24px 48px -30px rgba(181,143,6,.8); }
 .ribbon { position: absolute; top: 20px; right: -42px; transform: rotate(40deg); background: var(--yellow); color: var(--yellow-ink); font-family: var(--display); font-weight: 700; font-size: .7rem; letter-spacing: .04em; padding: 5px 46px; }
@@ -353,7 +363,7 @@ p { margin: 0; }
 .footer .cols { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 30px; }
 .footer .brand .name { color: var(--asphalt-fg); }
 .footer .brand .name small { color: #8FA196; }
-.footer h4 { font-family: var(--display); color: var(--asphalt-fg); margin: 0 0 10px; font-size: 1rem; }
+.footer .f-title { font-family: var(--display); color: var(--asphalt-fg); margin: 0 0 10px; font-size: 1rem; font-weight: 700; letter-spacing: 0; }
 .footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .footer a { text-decoration: none; }
 .footer a:hover { color: var(--yellow); }
@@ -478,9 +488,10 @@ p { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .cnh, .float-chip, .road .lane, .road .car, .pill .dot, .rotator__word::after { animation: none !important; }
-  .road .car { left: 20%; } .road .car.two { left: 65%; }
+  .road .car { transform: translateX(20vw); } .road .car.two { transform: translateX(65vw); }
   .js .reveal { opacity: 1; transform: none; transition: none; }
   .btn, .service, .uf, .social, .journey::after { transition: none; }
+  .btn::after, .service::before { transition: none; }
 }
 </style>
 <script>document.documentElement.classList.add("js");</script>
@@ -820,11 +831,11 @@ p { margin: 0; }
         </div>
       </div>
       <div>
-        <h4>Atalhos</h4>
+        <h3 class="f-title">Atalhos</h3>
         <ul><li><a href="#servicos">Como ajudo</a></li><li><a href="#categorias">Categorias</a></li><li><a href="#memes">Memes</a></li><li><a href="#duvidas">Perguntas</a></li><li><a href="#contato">Cadastro</a></li></ul>
       </div>
       <div>
-        <h4>Fale comigo</h4>
+        <h3 class="f-title">Fale comigo</h3>
         <ul><li><a class="wa-link" data-src="rodape" href="https://wa.me/553121300101" target="_blank" rel="noopener">WhatsApp (31) 2130-0101</a></li><li>Atendimento em todo o Brasil</li></ul>
       </div>
     </div>
@@ -835,7 +846,7 @@ p { margin: 0; }
   </div>
 </footer>
 
-<button class="fab" id="fab" type="button" aria-controls="chat" aria-expanded="false" aria-label="Abrir o assistente do Getúlio"><svg><use href="#i-wa"/></svg><span class="badge-n">1</span></button>
+<button class="fab" id="fab" type="button" aria-controls="chat" aria-expanded="false" ><svg aria-hidden="true"><use href="#i-wa"/></svg><span class="sr">Abrir o assistente do Getúlio</span><span class="badge-n" aria-hidden="true">1</span></button>
 
 <section class="chat" id="chat" hidden aria-label="Assistente do Getúlio">
   <header class="chat__head">
@@ -897,12 +908,15 @@ p { margin: 0; }
   menuBtn.addEventListener("click", function () { setMenu(!nav.classList.contains("is-open")); });
   nav.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") { setMenu(false); closeChat(); } });
-  function onScroll() {
+  var ticking = false;
+  function paintScroll() {
+    ticking = false;
     var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
     bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, h.scrollTop / max) : 0) + ")";
     header.classList.toggle("is-scrolled", h.scrollTop > 8);
   }
-  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(paintScroll); } }
+  window.addEventListener("scroll", onScroll, { passive: true }); if (window.scrollY > 0) onScroll();
 
   /* ---------- Navegação entre Início e Memes ---------- */
   var views = { inicio: document.getElementById("view-inicio"), memes: document.getElementById("view-memes") };
@@ -995,7 +1009,7 @@ p { margin: 0; }
 
   /* ---------- Estados ---------- */
   var ufBox = document.getElementById("ufs");
-  ufBox.innerHTML = UFS.map(function (u) { return '<button type="button" class="uf" data-uf="' + u[0] + '" title="' + u[1] + '" aria-label="' + u[1] + '">' + u[0] + "</button>"; }).join("");
+  ufBox.innerHTML = UFS.map(function (u) { return '<button type="button" class="uf" data-uf="' + u[0] + '" title="' + u[1] + '">' + u[0] + '<span class="sr"> – ' + u[1] + "</span></button>"; }).join("");
   ufBox.addEventListener("click", function (e) {
     var b = e.target.closest(".uf"); if (!b) return;
     fUf.value = b.getAttribute("data-uf"); mark(fUf, false);
@@ -1014,17 +1028,17 @@ p { margin: 0; }
   ];
   var tabs = document.getElementById("catTabs"), info = document.getElementById("catInfo"), cur = 0;
   tabs.innerHTML = CATS_INFO.map(function (c, i) { return '<button type="button" class="cat-tab" role="tab" id="tab-' + c.k + '" aria-controls="catInfo" aria-selected="' + (i === 0) + '" tabindex="' + (i === 0 ? 0 : -1) + '"><b>' + c.k + "</b><span>" + c.n + "</span></button>"; }).join("");
-  function showCat(i, focus) {
+  function showCat(i, focus, animate) {
     cur = i; var c = CATS_INFO[i];
     tabs.querySelectorAll(".cat-tab").forEach(function (t, j) { t.setAttribute("aria-selected", j === i); t.tabIndex = j === i ? 0 : -1; if (j === i && focus) t.focus(); });
     info.setAttribute("aria-labelledby", "tab-" + c.k);
     info.innerHTML = '<div class="emoji" aria-hidden="true">' + c.e + '</div><div class="txt"><h3>Categoria ' + c.k + " · " + c.n + '</h3><p class="muted">' + c.d + "</p><ul>" + c.l.map(function (x) { return "<li>" + x + "</li>"; }).join("") + '</ul><p class="req">' + c.r + '</p><a class="btn btn-dark btn-small" href="#contato" data-cat="' + c.k + '">Tirar a categoria ' + c.k + " →</a></div>";
-    info.classList.remove("swap"); void info.offsetWidth; info.classList.add("swap");
+    if (animate) { info.classList.remove("swap"); requestAnimationFrame(function () { info.classList.add("swap"); }); }
   }
-  tabs.addEventListener("click", function (e) { var t = e.target.closest(".cat-tab"); if (t) showCat([].indexOf.call(tabs.children, t)); });
+  tabs.addEventListener("click", function (e) { var t = e.target.closest(".cat-tab"); if (t) showCat([].indexOf.call(tabs.children, t), false, true); });
   tabs.addEventListener("keydown", function (e) {
     var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
-    if (d) { e.preventDefault(); showCat((cur + d + CATS_INFO.length) % CATS_INFO.length, true); }
+    if (d) { e.preventDefault(); showCat((cur + d + CATS_INFO.length) % CATS_INFO.length, true, true); }
   });
   info.addEventListener("click", function (e) {
     var a = e.target.closest("[data-cat]"); if (!a) return;
